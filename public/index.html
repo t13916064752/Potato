@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 生图工作台</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="hero">
+        <p class="eyebrow">Local GPT Image Studio</p>
+        <h1>AI 生图工作台</h1>
+        <p class="subtitle">输入提示词，选择比例、分辨率、数量，然后直接在本地网页里查看和下载生成结果。</p>
+      </section>
+
+      <section class="panel controls">
+        <form id="generation-form">
+          <label class="field field-full">
+            <span>提示词</span>
+            <textarea id="prompt" rows="7" placeholder="例如：一只穿宇航服的橘猫站在月球表面，电影感光影，细节丰富" required></textarea>
+          </label>
+
+          <div class="grid">
+            <label class="field">
+              <span>常用比例 / 分辨率</span>
+              <select id="size">
+                <option value="1024x1024">1:1 正方形 · 1024×1024</option>
+                <option value="1536x1024">3:2 横图 · 1536×1024</option>
+                <option value="1024x1536">2:3 竖图 · 1024×1536</option>
+                <option value="auto">自动</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>数量</span>
+              <select id="count">
+                <option value="1">1 张</option>
+                <option value="2">2 张</option>
+                <option value="3">3 张</option>
+                <option value="4">4 张</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>质量</span>
+              <select id="quality">
+                <option value="auto">自动</option>
+                <option value="low">低 · 更快</option>
+                <option value="medium">中</option>
+                <option value="high">高 · 更细致</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>背景</span>
+              <select id="background">
+                <option value="auto">自动</option>
+                <option value="opaque">不透明</option>
+                <option value="transparent">透明</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="submit" type="submit">生成图片</button>
+            <button id="clear-history" type="button" class="secondary">清空历史</button>
+          </div>
+        </form>
+        <p id="status" role="status"></p>
+      </section>
+
+      <section class="results-heading">
+        <h2>生成结果</h2>
+        <p>结果会保存在当前浏览器的本地历史中，刷新页面也能继续查看。</p>
+      </section>
+      <section id="gallery" class="gallery" aria-live="polite"></section>
+    </main>
+
+    <template id="image-card-template">
+      <article class="card">
+        <img alt="AI 生成图片" />
+        <div class="card-body">
+          <p class="meta"></p>
+          <p class="prompt"></p>
+          <a class="download" download>下载 PNG</a>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
